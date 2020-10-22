@@ -37,7 +37,9 @@ public class WordRecommender {
 	 * @param commonPercent A {@code double} between 0.0 (0% common) and 1.0 (100% common). Defined between two
 	 * words w1 and w2 as (# of chars in w1 AND w2 / # or chars in w1 OR w2).
 	 * @param topN The number of legal words to return.
-	 * @return A list of {@code topN} word suggestions for the given incorrect word.
+	 * @return A list of {@code topN} word suggestions for the given incorrect word. Returned words must be within
+	 * {@code tolerance} of {@code word.length()} and have at least 
+	 * {@code commonPercent} % of characters in common with {@code word}.
 	 */
 	public ArrayList<String> getWordSuggestions (String word, int tolerance, double commonPercent, int topN) {
 		ArrayList<String> result = new ArrayList<String>();
