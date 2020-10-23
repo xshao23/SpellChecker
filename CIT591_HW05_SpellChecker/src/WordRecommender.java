@@ -26,7 +26,28 @@ public class WordRecommender {
 	 * @return The average similarity score between {@code word1} and {@code word2}.
 	 */
 	public double getSimilarity (String word1, String word2) {
-		return 0.0;
+		// Determine shorter word length.
+		int shorterLength = Math.min(word1.length(), word2.length());
+		
+		// Iterate through shorter length, calculating left and right similarity scores.
+		// Similarity score +1 if the words have the same letter in the same "position".
+		int leftSimilarity = 0;
+		int rightSimilarity = 0;
+		
+		for (int i = 0; i < shorterLength; i++) {
+			// Check left similarity.
+			char lChar1 = word1.charAt(i);
+			char lChar2 = word2.charAt(i);
+			if (lChar1 == lChar2) leftSimilarity++;
+			
+			// Check right similarity.
+			char rChar1 = word1.charAt(word1.length() - 1 - i);
+			char rChar2 = word2.charAt(word2.length() - 1 - i);
+			if (rChar1 == rChar2) rightSimilarity++;
+		}
+		
+		// Return average of similarity scores.
+		return (leftSimilarity + rightSimilarity) / 2.0;
 	}
 	
 	/**
