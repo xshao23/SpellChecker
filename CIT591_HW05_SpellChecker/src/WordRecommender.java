@@ -73,7 +73,15 @@ public class WordRecommender {
 	 * @return A formatted string consisting of the input list elements in a numbered list.
 	 */
 	public String prettyPrint(ArrayList<String> list) {
-		return "";
+		// Initialize result.
+		String result = "";
+		
+		// Print all strings with label.
+		for (int i = 0; i < list.size(); i++) {
+			result = result + (i + 1) + ". " + list.get(i) + "\n";
+		}
+		
+		return result;
 	}
 
 }
