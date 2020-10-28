@@ -157,14 +157,12 @@ public class WordRecommenderRunner {
 				else {
 					System.out.println("'" + inputWord + "' left as-is.");
 				}
-				
+				System.out.println();
 				continue;
 			}
 			
 		}
-
-		System.out.println("Review complete!");
-		
+		 
 		// Get name of output file
 		String outputFileName = runner.generateOutputFileName(inputFile.getName());
 		
@@ -172,7 +170,8 @@ public class WordRecommenderRunner {
 		ioHelper.writeListToFile(outputFileName, outputWords);
 		
 		// End program, tell user where to find new file.
-		System.out.println("Program complete! You can find your updated file in " + outputFileName + ".");
+		System.out.println("***************************************************************************");
+		System.out.println("Review complete! You can find your updated file in " + outputFileName + ".");
 		
 	}
 
