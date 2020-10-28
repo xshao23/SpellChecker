@@ -72,9 +72,15 @@ public class WordRecommenderRunner {
 			
 			// If it is not, then:
 			else {
-				//     i) Call WordRecommender.getWordSuggestions
-				//    ii) Prompt for user input; loop until input is valid.
-				//   iii) Update input words with result of user input. (Maybe make ALL CAPS if updated?)
+				// Report to user.
+				System.out.println("'" + inputWord + "' not found in dictionary.");
+				
+				// Get suggested replacements.
+				ArrayList<String> suggestions = wr.getWordSuggestions(inputWord, 3, 0.75, 5);
+				
+				// Prompt for user input; loop until input is valid.
+				
+				// Update input words with result of user input. (Maybe make ALL CAPS if updated?)
 				continue;
 			}
 			
