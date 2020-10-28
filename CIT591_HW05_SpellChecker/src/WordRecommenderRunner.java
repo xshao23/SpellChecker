@@ -44,13 +44,13 @@ public class WordRecommenderRunner {
 		
 		
 		// Get suggestions from WordRecommender.
-		ArrayList<String> suggestions = wr.getWordSuggestions(currWord, 3, 0.75, 5);
+		ArrayList<String> suggestions = wr.getWordSuggestionsTemp(currWord, 3, 0.75, 5);
 
 		// If there are suggestions available, show them, then options.
 		if (suggestions.size() > 0) {
 			suggestionsAvailable = true;
 			System.out.println("The following suggestions are available as replacements:");
-			wr.prettyPrint(suggestions);
+			System.out.println(wr.prettyPrint(suggestions));
 			System.out.println("You can select one of the following options: 'r' to use a suggested replacement, 'a' to leave as-is, 't' to type in replacement.");
 		}
 		
@@ -66,7 +66,7 @@ public class WordRecommenderRunner {
 		
 		// Handle user choice 'r': prompt for selection of recommended word options.
 		if (selectedEditOption.equals("r")) {
-			System.out.println("Please type in the number of the suggested word to use as replacement.");
+			System.out.println("Please type in the number (1-" + suggestions.size() + ") of the suggested word to use as replacement.");
 			editOptions.clear();
 			for (int i = 0; i < suggestions.size(); i ++) {
 				editOptions.add(Integer.toString(i + 1));
