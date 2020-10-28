@@ -17,7 +17,7 @@ public class IOUtility {
 	/**
 	 * Prompts the user repeatedly until a valid input file is given. A valid input file will end in .txt
 	 * and must actually exist! Users input strings, but these strings represent {@link File} objects.
-	 * @param A {@link Scanner} object to get user input.
+	 * @param userInputScanner A {@link Scanner} object to get user input.
 	 * @return A valid input file (a {@code File} object).
 	 */
 	public File getTxtFileFromUser(Scanner userInputScanner) {
@@ -108,5 +108,49 @@ public class IOUtility {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Prompts users to select from an array of options by typing in the option to select.
+	 * @param choices The {@code ArrayList} of options.
+	 * @param userInputScanner A {@link Scanner} object to get user input.
+	 * @return The selected element from the list. {@null} if list is empty.
+	 */
+	public static String getUserChoiceFromArrayList (ArrayList<String> choices, Scanner userInputScanner) {
+		
+		// Initialize.
+		boolean validInput = false;
+		String choice = null;
+		
+		// Check that there are choices.
+		if (!(choices.size() == 0)) {
+			
+			// Prompt user for input.
+			System.out.println("Please enter your selection.");
+			
+			// Validate that input is in the list of choices.
+			while (!validInput) {
+				
+				choice = userInputScanner.next();
+				
+				// If it is, return choice.
+				if (choices.contains(choice)) {
+					validInput = true;
+				}
+				
+				// Otherwise, prompt for new input.
+				else {
+					System.out.println("Please select only from the options given.");
+				}
+			}
+			
+			return choice;
+		}
+		
+		// If no choices, return null.
+		else {
+			return choice;
+		}
+	
+	}
+	
 }
