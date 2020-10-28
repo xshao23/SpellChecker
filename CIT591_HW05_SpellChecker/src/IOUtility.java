@@ -102,6 +102,7 @@ public class IOUtility {
 			
 			// Flush pw.
 			pw.flush();
+			pw.close();
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
