@@ -1,4 +1,6 @@
 import java.util.*;
+import java.io.*;
+
 
 public class WordRecommender {
 
@@ -7,15 +9,23 @@ public class WordRecommender {
      * File containing a dictionary of correct words.
      */
     String filename;
+    
+    /**
+     * A list of all the words in the dictionary defined by {@code filename}.
+     */
+    ArrayList<String> wordsInDict;
 
     // CONSTRUCTORS
     /**
-     * Create a WordRecommender object with a given dictionary.
-     * 
+     * Create a WordRecommender object from a given dictionary. The dictionary is stored both
+     * as a {@code filename} and with its words in an {@code ArrayList<String>}: {@code wordsInDict}.
      * @param fileName The file to be set as dictionary.
      */
     public WordRecommender(String fileName) {
-	this.filename = fileName;
+    	this.filename = fileName;
+    	
+    	IOUtility ioHelper = new IOUtility();
+    	this.wordsInDict = ioHelper.readFileToList(new File(filename));
     }
 
     // METHODS
