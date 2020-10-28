@@ -137,4 +137,5 @@ public class WordRecommender {
 	similarity = (intersection *1.0)/((charsInW1.size()+charsInW2.size()-intersection)*1.0);
 	return similarity;
     }
+    
 }
