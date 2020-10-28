@@ -80,12 +80,24 @@ public class WordRecommender {
      *         {@code word.length()} and have at least {@code commonPercent} % of
      *         characters in common with {@code word}. Returned words are ranked by the similarity score given by {@code this.getSimilarity}.
      */
+    
     public ArrayList<String> getWordSuggestions(String word, int tolerance, double commonPercent, int topN) {
 	ArrayList<String> result = new ArrayList<String>();
 	
 
 	return result;
     }
+    
+    public ArrayList<String> getWordSuggestionsTemp(String word, int tolerance, double commonPercent, int topN) {
+	ArrayList<String> result = new ArrayList<String>();
+	result.add("correct");
+	result.add("notWrong");
+	result.add("bad");
+	result.add("fake");
+	return result;
+    }
+    
+    
 
     /**
      * Formats a list of words for display purposes.
