@@ -68,7 +68,7 @@ public class WordRecommender {
      * @return A list of {@code topN} word suggestions for the given incorrect word.
      *         Returned words must be within {@code tolerance} of
      *         {@code word.length()} and have at least {@code commonPercent} % of
-     *         characters in common with {@code word}.
+     *         characters in common with {@code word}. Returned words are ranked by the similarity score given by {@code this.getSimilarity}.
      */
     public ArrayList<String> getWordSuggestions(String word, int tolerance, double commonPercent, int topN) {
 	ArrayList<String> result = new ArrayList<String>();
