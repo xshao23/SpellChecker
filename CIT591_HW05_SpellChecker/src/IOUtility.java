@@ -123,10 +123,7 @@ public class IOUtility {
 		
 		// Check that there are choices.
 		if (!(choices.size() == 0)) {
-			
-			// Prompt user for input.
-			System.out.println("Please enter your selection.");
-			
+						
 			// Validate that input is in the list of choices.
 			while (!validInput) {
 				
