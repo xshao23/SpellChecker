@@ -1,7 +1,6 @@
 import java.util.*;
 import java.io.*;
 
-
 public class WordRecommender {
 
     // INSTANCE VARIABLES
@@ -9,7 +8,7 @@ public class WordRecommender {
      * File containing a dictionary of correct words.
      */
     String filename;
-    
+
     /**
      * A list of all the words in the dictionary defined by {@code filename}.
      */
@@ -17,15 +16,17 @@ public class WordRecommender {
 
     // CONSTRUCTORS
     /**
-     * Create a WordRecommender object from a given dictionary. The dictionary is stored both
-     * as a {@code filename} and with its words in an {@code ArrayList<String>}: {@code wordsInDict}.
+     * Create a WordRecommender object from a given dictionary. The dictionary is
+     * stored both as a {@code filename} and with its words in an
+     * {@code ArrayList<String>}: {@code wordsInDict}.
+     * 
      * @param fileName The file to be set as dictionary.
      */
     public WordRecommender(String fileName) {
-    	this.filename = fileName;
-    	
-    	IOUtility ioHelper = new IOUtility();
-    	this.wordsInDict = ioHelper.readFileToList(new File(filename));
+	this.filename = fileName;
+
+	IOUtility ioHelper = new IOUtility();
+	this.wordsInDict = ioHelper.readFileToList(new File(filename));
     }
 
     // METHODS
@@ -78,16 +79,54 @@ public class WordRecommender {
      * @return A list of {@code topN} word suggestions for the given incorrect word.
      *         Returned words must be within {@code tolerance} of
      *         {@code word.length()} and have at least {@code commonPercent} % of
-     *         characters in common with {@code word}. Returned words are ranked by the similarity score given by {@code this.getSimilarity}.
+     *         characters in common with {@code word}. Returned words are ranked by
+     *         the similarity score given by {@code this.getSimilarity}.
      */
-    
+
     public ArrayList<String> getWordSuggestions(String word, int tolerance, double commonPercent, int topN) {
 	ArrayList<String> result = new ArrayList<String>();
+	int upperBound = word.length() + tolerance;
+	int lowerBound = word.length() - tolerance;
+	ArrayList<Double> jScores = new ArrayList<>();
 	
+	for (String wordInDict : wordsInDict) {
+	    if (wordInDict.length() >= lowerBound && wordInDict.length() <= upperBound) {
+		double jSimilarity = getJaccardSimilarity(word, wordInDict);
+		if (jSimilarity >= commonPercent) {
+		    if (jScores.size() < topN) {
+			jScores.add(jSimilarity);
+			result.add(wordInDict);
+		    } else {
+			double smallest = jScores.get(0);
+			for (double jscore : jScores) {
+			    if (jscore < smallest) {
+				smallest = jscore;
+			    }
+			}
 
-	return result;
+			if (jSimilarity > smallest) {
+			    int smallestIndex = jScores.indexOf(smallest);
+			    jScores.remove(smallest);
+			    jScores.add(jSimilarity);
+			    result.remove(smallestIndex);
+			    result.add(wordInDict);
+			}
+		    }
+		}
+	    }
+	}
+	
+	ArrayList<String> topWords = new ArrayList<>();
+	for (int i=0; i<jScores.size();i++) {
+	    int indexOfMax = jScores.indexOf(this.getMax(jScores));
+	    topWords.add(result.get(indexOfMax));
+	    jScores.remove(indexOfMax);
+	    result.remove(indexOfMax);
+	}
+	
+	return topWords;
     }
-    
+
     public ArrayList<String> getWordSuggestionsTemp(String word, int tolerance, double commonPercent, int topN) {
 	ArrayList<String> result = new ArrayList<String>();
 	result.add("correct");
@@ -96,8 +135,6 @@ public class WordRecommender {
 	result.add("fake");
 	return result;
     }
-    
-    
 
     /**
      * Formats a list of words for display purposes.
@@ -116,11 +153,12 @@ public class WordRecommender {
 	}
 	return result;
     }
-    
+
     /**
-     * take in two words and calculate the similarity based on Jaccard Similarity 
-     * @param word1 word of interest 
-     * @param word2 word of interest 
+     * take in two words and calculate the similarity based on Jaccard Similarity
+     * 
+     * @param word1 word of interest
+     * @param word2 word of interest
      * @return double |intersection|/|union|
      */
 
@@ -151,13 +189,23 @@ public class WordRecommender {
 	    }
 	}
 	int intersection = 0;
-	for (Character letter:charsInW1) {
-	    if (charsInW2.contains(letter)){
-		intersection++; 
-	    } 
+	for (Character letter : charsInW1) {
+	    if (charsInW2.contains(letter)) {
+		intersection++;
+	    }
 	}
-	similarity = (intersection *1.0)/((charsInW1.size()+charsInW2.size()-intersection)*1.0);
+	similarity = (intersection * 1.0) / ((charsInW1.size() + charsInW2.size() - intersection) * 1.0);
 	return similarity;
     }
     
+    public double getMax(ArrayList<Double> nums) {
+	double max = nums.get(0);
+	for (double num:nums) {
+	    if (num > max){
+		max = num;
+	    }
+	}
+	return max; 
+    }
+
 }
